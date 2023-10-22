@@ -1,0 +1,52 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Deploy Vision One Endpoint Security Agent using SSM Document
+
+Resources:
+  VisionOneAgentDocument:
+    Type: "AWS::SSM::Document"
+    Properties:
+      Name: "DeployVisionOneAgent"
+      DocumentType: "Command"
+      Content: 
+        schemaVersion: "2.2"
+        description: "Deploy Vision One Endpoint Security Agent."
+        mainSteps:
+          - action: "aws:runShellScript"
+            name: "runLinuxDeployment"
+            precondition:
+              StringEquals:
+                - platformType
+                - "Linux"
+            inputs:
+              runCommand:
+                - 'if [ -e /tmp/TM-Linux-Agent.tar ]; then'
+                - '    echo "Trend V1 Linux Agent package already exists in path."'
+                - 'else'
+                - '    aws s3 cp {{ LinuxBucketURI }} /tmp/TM-Linux-Agent.tar'
+                - '    tar -xvf /tmp/TM-Linux-Agent.tar'
+                - '    ./tmxbc install'
+                - 'fi'
+          - action: "aws:runPowerShellScript"
+            name: "runWindowsDeployment"
+            precondition:
+              StringEquals:
+                - platformType
+                - "Windows"
+            inputs:
+              runCommand:
+                - 'if (Test-Path -Path "C:\Temp\TM-Windows-Agent.zip") {'
+                - '    Write-Host "Trend V1 Windows Agent package already exists in path."'
+                - '} else {'
+                - '    aws s3 cp {{ WindowsBucketURI }} C:\\Temp\\TM-Windows-Agent.zip'
+                - '    Expand-Archive -Path "C:\Temp\TM-Windows-Agent.zip" -DestinationPath "C:\Temp\\"'
+                - '    C:\\Temp\\TM-Windows-Agent\\EndpointBasecamp.exe'
+                - '}'
+
+Parameters:
+  LinuxBucketURI:
+    Type: String
+    Description: The S3 URI for Linux Tar Package.
+
+  WindowsBucketURI:
+    Type: String
+    Description: The S3 URI for Windows Zip Package.
