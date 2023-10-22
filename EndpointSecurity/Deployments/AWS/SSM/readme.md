@@ -22,7 +22,15 @@ To deploy the Vision One Endpoint Security Agent using this SSM Document, you'll
 This Document is currently made available in the AWS US-EAST-1 region.
 [See here](https://us-east-1.console.aws.amazon.com/systems-manager/documents/VisionOneAgentDeployment/description?region=us-east-1)
 
-The SSM Document you need to run is defined as follows:
+Need to deploy in another AWS Region?
+
+Deploy the CloudFormation Template [here](https://github.com/JustinDPerkins/VisionOne/blob/main/EndpointSecurity/Deployments/AWS/SSM/v1es.ssm.template.yaml) in any region.
+
+---
+
+### Contents
+
+The SSM Document that will be run is defined as follows:
 
 ```yaml
 schemaVersion: "2.2"
