@@ -19,10 +19,10 @@ To deploy the Vision One Endpoint Security Agent using this SSM Document, you'll
 - `LinuxBucketURI` (String): The S3 URI for the Linux Tar Package. Example: `s3://your-bucket/linux/TM-Linux-Agent.tar`
 - `WindowsBucketURI` (String): The S3 URI for the Windows Zip Package. Example: `s3://your-bucket/windows/TM-Windows-Agent.zip`
 
-This Document is currently made available in the AWS US-EAST-1 region.
+### This Document is currently made available in the AWS US-EAST-1 region.
 [See here](https://us-east-1.console.aws.amazon.com/systems-manager/documents/VisionOneAgentDeployment/description?region=us-east-1)
 
-Need to deploy in another AWS Region?
+### Need to deploy in another AWS Region?
 
 Deploy the CloudFormation Template [here](https://github.com/JustinDPerkins/VisionOne/blob/main/EndpointSecurity/Deployments/AWS/SSM/v1es.ssm.template.yaml) in any region.
 
